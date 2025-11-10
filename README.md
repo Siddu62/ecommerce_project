@@ -35,10 +35,13 @@ Tech Stack
 
 2.Install dependencies
   pip install -r requirements.txt
+
 3. Run migrations
   python manage.py makemigrations
   python manage.py migrate
-4. Seed data (products & admin user)
-  python seed_scripts/seed_data.py  
-5. Run the development server
+
+5. Seed data (products & admin user)
+  python seed_scripts/seed_data.py
+
+7. Run the development server
   python manage.py runserver  
