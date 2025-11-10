@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyShop - E-Commerce</title>
+
+  <!-- ✅ Bootstrap + FontAwesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+  <style>
+    .category-bar {
+  background: linear-gradient(90deg, #fff8e1, #e1f5fe);
+  border-bottom: 2px solid #eee;
+  border-radius: 12px;
+}
+
+.category-btn {
+  margin: 5px;
+  border: none;
+  background-color: #e0e0e0;
+  color: #333;
+  padding: 8px 18px;
+  border-radius: 25px;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+.category-btn.active {
+  background-color: #ff9900;
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(255, 153, 0, 0.4);
+}
+
+    .category-btn:hover {
+      background-color: #ffcc00;
+      color: #000;
+      box-shadow: 0 2px 6px rgba(255, 204, 0, 0.6);
+      transform: translateY(-2px);
+    }
+
+    body {
+      background-color: #f6f6f6;
+      font-family: "Poppins", sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #f9f9f9, #e0f7fa, #fff3e0);
+      background-attachment: fixed;
+      font-family: "Poppins", sans-serif;
+      animation: bgFlow 10s infinite alternate ease-in-out;
+    }
+    
+    @keyframes bgFlow {
+      0% { background-position: left top; }
+      100% { background-position: right bottom; }
+    }
+    
+    .product-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-radius: 15px;
+    }
+    
+    .product-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    /* ✅ Navbar */
+    .navbar {
+      background-color: #232f3e;
+      padding: 15px 20px;
+    }
+    .navbar-brand {
+      color: #ff9900 !important;
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+    .nav-link {
+      color: #fff !important;
+      font-weight: 500;
+      margin-right: 15px;
+    }
+    .nav-link:hover {
+      color: #ff9900 !important;
+    }
+
+    /* ✅ Category Buttons */
+    .category-bar {
+      background-color: #fff;
+      padding: 15px 0;
+      text-align: center;
+      margin-bottom: 25px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    .category-btn {
+      margin: 5px;
+      border: none;
+      background-color: #e0e0e0;
+      color: #333;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+    .category-btn:hover,
+    .category-btn.active {
+      background-color: #ff9900;
+      color: #fff;
+    }
+
+    /* ✅ Product Cards */
+    .product-card {
+      background-color: #fff;
+      border: none;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    .product-img {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      background-color: #fafafa;
+    }
+    .product-info {
+      padding: 15px;
+      text-align: center;
+    }
+    .product-name {
+      font-size: 1rem;
+      font-weight: 600;
+      height: 40px;
+      overflow: hidden;
+    }
+    .product-category {
+      color: #777;
+      font-size: 0.9rem;
+    }
+    .product-price {
+      color: #b12704;
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-top: 10px;
+    }
+    .btn-cart {
+      background-color: #ff9900;
+      color: #000;
+      border: none;
+      width: 100%;
+      font-weight: bold;
+      padding: 8px 0;
+      border-radius: 8px;
+    }
+    .btn-cart:hover {
+      background-color: #ffa31a;
+    }
+
+    /* ✅ Pagination */
+    #paginationControls {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    /* ✅ Footer */
+    footer {
+      background-color: #232f3e;
+      color: #ccc;
+      text-align: center;
+      padding: 30px;
+      margin-top: 50px;
+    }
+    footer a {
+      color: #ff9900;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <!-- ✅ Navbar -->
+  <!-- ✅ Navbar -->
+  <nav class="navbar navbar-expand-lg sticky-top shadow-sm" style="background: linear-gradient(90deg, #0f2027, #203a43  , #2c5364);">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand fw-bold" href="/" style="color:#ffcc00; font-size:1.8rem;">
+        <i class="fa-solid fa-shop me-2"></i>MyShop
+      </a>
+  
+      <form class="d-flex mx-auto search-bar" style="width: 420px;">
+        <input class="form-control me-2 shadow-sm border-0 rounded-pill px-3" id="searchInput" type="search"  placeholder="Search for products..." />
+        <button class="btn rounded-pill px-4 fw-bold" type="button"
+                style="background-color:#ffcc00; color:#000; border:none;"
+                onclick="searchProducts()">
+          <i class="fa-solid fa-magnifying-glass"></i> Search
+        </button>
+      </form>
+  
+      <ul class="navbar-nav ms-auto fw-semibold">
+        <li class="nav-item"><a class="nav-link text-light px-3" href="/">🏠 Home</a></li>
+        <li class="nav-item"><a class="nav-link text-light px-3" href="/cart/">🛒 Cart</a></li>
+        <li class="nav-item"><a class="nav-link text-light px-3" href="/admin/login/">🔑 Admin</a></li>
+      </ul>
+    </div>
+  </nav>
+
+<style>
+.navbar {
+  transition: all 0.4s ease;
+}
+.navbar:hover {
+  box-shadow: 0 4px 15px rgba(255, 204, 0, 0.4);
+}
+.nav-link {
+  transition: color 0.3s ease;
+}
+.nav-link:hover {
+  color: #ffcc00 !important;
+}
+.search-bar input {
+  background: #f5f5f5;
+}
+</style>
+
+  <section class="hero-banner text-center p-5">
+    <h1 class="fw-bold">Welcome to <span style="color: #ff9900;">MyShop</span></h1>
+    <p>Find everything from gadgets to groceries — all in one place!</p>
+  </section>
+
+<style>
+.hero-banner {
+  background: linear-gradient(90deg, #ffcc80, #fff3e0, #e0f7fa);
+  border-radius: 12px;
+  margin: 20px auto;
+  max-width: 90%;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+</style>
+
+
+  <!-- ✅ Category Filter -->
+  <div class="category-bar">
+    <button class="category-btn active" onclick="filterCategory('All')">All</button>
+    <button class="category-btn" onclick="filterCategory('Electronics')">Electronics</button>
+    <button class="category-btn" onclick="filterCategory('Apparel')">Apparel</button>
+    <button class="category-btn" onclick="filterCategory('Beauty')">Beauty</button>
+    <button class="category-btn" onclick="filterCategory('Home & Kitchen')">Home & Kitchen</button>
+    <button class="category-btn" onclick="filterCategory('Audio')">Audio</button>
+    <button class="category-btn" onclick="filterCategory('Smartwatch')">Smartwatch</button>
+    <button class="category-btn" onclick="filterCategory('Accessories')">Accessories</button>
+    <button class="category-btn" onclick="filterCategory('Fruits')">Fruits</button>
+    <button class="category-btn" onclick="filterCategory('Vegetables')">Vegetables</button>
+    <button class="category-btn" onclick="filterCategory('Food')">Food</button>
+    <button class="category-btn" onclick="filterCategory('Sports')">Sports</button>
+  </div>
+
+  <!-- ✅ Product Grid -->
+  <div class="container">
+    <div class="row" id="productList"></div>
+    <div id="paginationControls"></div>
+  </div>
+
+  <!-- ✅ Footer -->
+  <!-- ✅ Footer -->
+  <footer class="footer text-center py-4 mt-5" 
+          style="background: linear-gradient(90deg, #2c5364, #203a43, #0f2027); color: #ddd;">
+    <div class="container">
+      <p class="mb-2 fw-bold">
+        © 2025 <span style="color:#ffcc00;">MyShop</span> | Designed with ❤️ by <span style="color:#ffcc00;">Siddu</  span>
+      </p>
+      <div class="footer-links mb-2">
+        <a href="/" class="footer-link">Home</a> |
+        <a href="/cart/" class="footer-link">Cart</a> |
+        <a href="/admin/login/" class="footer-link">Admin</a>
+      </div>
+      <div class="social-icons mt-2">
+        <a href="#" class="mx-2"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="mx-2"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="mx-2"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+  </footer>
+<style>
+.footer-link {
+  color: #ffcc00;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+.footer-link:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+.social-icons a {
+  color: #ffcc00;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+.social-icons a:hover {
+  color: #fff;
+  transform: scale(1.2);
+}
+</style>
+
+
+  <!-- ✅ Script -->
+  <script>
+    let allProducts = [];
+    let nextPage = null;
+    let prevPage = null;
+    let currentCategory = "All";
+    let currentPage = 1;
+
+    async function fetchProducts() {
+      let url = "/api/products/";
+      let allData = [];
+    
+      while (url) {
+        const res = await fetch(url);
+        const data = await res.json();
+        allData = allData.concat(data.results);
+        url = data.next; // fetch next page if exists
+      }
+    
+      // ✅ Store all products
+      allProducts = allData.map(p => ({
+        ...p,
+        image_url: p.image_url && p.image_url.trim() !== ""
+          ? p.image_url
+          : `https://picsum.photos/300?random=${Math.floor(Math.random() * 1000)}`
+      }));
+    
+      displayProducts(allProducts);
+    }
+
+
+    function updatePaginationButtons() {
+      const paginationDiv = document.getElementById("paginationControls");
+      paginationDiv.innerHTML = `
+        <div class="mt-4">
+          <button class="btn btn-dark me-2" onclick="prevPageClick()" ${!prevPage ? "disabled" : ""}>⬅️ Previous</button>
+          <button class="btn btn-dark" onclick="nextPageClick()" ${!nextPage ? "disabled" : ""}>Next ➡️</button>
+          <p class="mt-2 text-muted">Page ${currentPage}</p>
+        </div>
+      `;
+    }
+
+    function nextPageClick() {
+      if (nextPage) {
+        const urlParams = new URL(nextPage);
+        currentPage = parseInt(urlParams.searchParams.get("page"));
+        fetchProducts(currentPage);
+      }
+    }
+
+    function prevPageClick() {
+      if (prevPage) {
+        const urlParams = new URL(prevPage);
+        currentPage = parseInt(urlParams.searchParams.get("page"));
+        fetchProducts(currentPage);
+      }
+    }
+
+    function addToCart(product) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const existing = cart.find(item => item.id === product.id);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ ...product, quantity: 1 });
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert(`${product.name} added to cart!`);
+    }
+
+    function displayProducts(products) {
+      const list = document.getElementById("productList");
+      list.innerHTML = "";
+
+      products.forEach(p => {
+        list.innerHTML += `
+          <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="product-card">
+              <img 
+    src="${p.image_url || p.image || `https://picsum.photos/300?random=${Math.floor(Math.random() * 1000)}`}" 
+                  alt="${p.name}" 
+                  class="product-img"
+                  onerror="this.src='https://via.placeholder.com/300x300?text=No+Image'">
+              <div class="product-info">
+                <h6 class="product-name">${p.name}</h6>
+                <p class="product-category">${p.category}</p>
+                <p class="product-price">₹${p.price}</p>
+                <button class="btn btn-cart" onclick='addToCart(${JSON.stringify(p)})'>
+                  <i class="fa fa-shopping-cart"></i> Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>`;
+      });
+    }
+
+    function filterCategory(category) {
+      // Highlight the active button
+      document.querySelectorAll(".category-btn").forEach((btn) => btn.classList.remove("active"));
+      event.target.classList.add("active");
+    
+      // If "All" is selected, show all products
+      if (category === "All") {
+        displayProducts(allProducts);
+        return;
+      }
+    
+      // ✅ Fix: Case-insensitive & flexible category filtering
+      const filtered = allProducts.filter((p) => 
+        p.category && p.category.toLowerCase().trim() === category.toLowerCase().trim()
+      );
+    
+      if (filtered.length === 0) {
+        // If no products found, show a friendly message
+        document.getElementById("productList").innerHTML = `
+          <div class="text-center mt-5">
+            <h4 class="text-secondary">No products found in <b>${category}</b> category.</h4>
+          </div>`;
+      } else {
+        displayProducts(filtered);
+      }
+    }
+
+
+    function searchProducts() {
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      const filtered = allProducts.filter(p =>
+        p.name.toLowerCase().includes(query)
+      );
+      displayProducts(filtered);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => fetchProducts());
+  </script>
+</body>
+</html>
